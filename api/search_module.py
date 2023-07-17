@@ -27,14 +27,14 @@ def find_pep_in_db(query):
     return pep
 
 
-# look for sanctions in our sanction database
-def find_sanctions_in_db(query):
+# look for results in our pep and sanction database
+def find_by_name(query, collection):
     # first we look in caption field
-    sanctions = Database.find_one(settings.MONGO_SANCTIONS_COLLECTION, 
-                {'caption': re.compile(query, re.IGNORECASE)},                              # case insensitive search
-                {"caption":1, "properties":1, "schema":1, "datasets":1, "_id": False})      # fields to select
+    results = Database.find_one(collection, 
+                {'name': re.compile(query, re.IGNORECASE)},                                     # case insensitive search
+                {"first_seen":False, "last_seen":False, "last_change":False, "_id": False})    # fields to ignore
     
-    return sanctions
+    return results
 
 
 # select only useful info from the found results
@@ -80,13 +80,9 @@ def search():
 
     Database.initialize()
 
-    # first, we try to look for person in our pep database
-    pep = find_pep_in_db(query)
-    sanctions = find_sanctions_in_db(query)
-
-    # what info do we even want to show? XD
-    if not full_results:
-        pep = select_useful_data(pep)
+    # first, we try to look for person in our pep and sanctions database
+    pep = find_by_name(query, settings.MONGO_PEP_COLLECTION)
+    sanctions = find_by_name(query, settings.MONGO_SANCTIONS_COLLECTION)
 
     # if not found in db, we can try using pepchecker
     # if pep is None:

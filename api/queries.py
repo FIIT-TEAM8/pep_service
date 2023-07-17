@@ -10,3 +10,5 @@ FIND_BY_FIRSTNAME_AND_LASTNAME = {
         }
     }
 }
+
+FIELDS_TO_IGNORE = {"first_seen":False, "last_seen":False, "last_change":False, "_id": False}
