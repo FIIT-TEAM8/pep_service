@@ -10,7 +10,7 @@
 
 Parameters:
 
-* q - search query (usually name, search is case insensitive, but accent sensitive)
+* q - search query (usually name, search is case and accent insensitive)
 * full - returns full or narrowed results (not yet implemented, default value is true)
 
 Examples:
