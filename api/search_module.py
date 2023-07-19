@@ -1,6 +1,7 @@
 from flask import Blueprint
 from flask.json import jsonify
 from flask import request
+from unidecode import unidecode
 import re
 
 import api.settings as settings
@@ -11,28 +12,16 @@ from .db_connector import Database
 search_blueprint = Blueprint("search_routes", __name__, url_prefix="/peps/")
 
 
-# look for person in our pep database
-def find_pep_in_db(query):
-    # first we look in caption field
-    pep = Database.find_one(settings.MONGO_PEP_COLLECTION, 
-                {'caption': re.compile(query, re.IGNORECASE)},              # case insensitive search
-                {"caption":1, "properties":1, "schema":1, "_id": False})    # fields to select
-
-    # if unsuccessful then we try looking using combination of first name and last name fields
-    if pep is None:
-        queries.FIND_BY_FIRSTNAME_AND_LASTNAME['$expr']['$regexMatch']['regex'] = query
-        pep = Database.find_one(settings.MONGO_PEP_COLLECTION, 
-                    queries.FIND_BY_FIRSTNAME_AND_LASTNAME,
-                    {"caption":1, "properties":1, "schema":1, "_id": False})        
-    return pep
+# transfort to same format as in database
+def transform_input_value(query):
+    return unidecode(query).lower()
 
 
 # look for results in our pep and sanction database
 def find_by_name(query, collection):
-    # first we look in caption field
     results = Database.find_one(collection, 
-                {'name': re.compile(query, re.IGNORECASE)},                                     # case insensitive search
-                {"first_seen":False, "last_seen":False, "last_change":False, "_id": False})    # fields to ignore
+                {'name_ascii': transform_input_value(query)},
+                queries.FIELDS_TO_IGNORE)
     
     return results
 
