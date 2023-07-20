@@ -2,9 +2,9 @@
 
 # Variables for db connection
 mongo_container="mongo_db"
-database="ams"
+database="whatever"
 username="fiitkar"
-password="izwTgPSrQ2GyPsGc7"
+password="xxxxxxxx"
 auth_database="admin"
 
 # Variables for the first collection
