@@ -2,11 +2,13 @@ FROM python:3.9-alpine
 
 WORKDIR /myApp
 
+COPY ./requirements.txt /myApp/
+
+RUN pip install -r requirements.txt
+
 ENV PRODUCTION=production
 
 COPY . ./
-
-RUN pip install -r requirements.txt
 
 EXPOSE 5002
 
