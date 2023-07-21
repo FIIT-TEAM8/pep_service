@@ -2,7 +2,7 @@
 
 # Variables for db connection
 mongo_container="mongo_db"
-database="whatever"
+database="adversea-pep" # this has to be same as MONGO_DB in /api/settings.py
 username="fiitkar"
 password="xxxxxxxx"
 auth_database="admin"
