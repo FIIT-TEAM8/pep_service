@@ -17,3 +17,6 @@ Examples:
 ```
 curl -X GET http://localhost:5000/peps/search?q=marian+kocner
 ```
+
+## Swagger
+https://app.swaggerhub.com/apis/xsipka/peps/1.0.0
