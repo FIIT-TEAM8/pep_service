@@ -3,6 +3,9 @@ name: Push Docker image to Dockerhub and deploy docker-compose
 on:
   push:
     branches: [ "master" ]
+    paths-ignore:
+      - '**/README.md'
+      - 'CI-CD-piepline.yml'
 
 jobs:
   build:
