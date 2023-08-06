@@ -23,6 +23,12 @@ def find_by_name(query, collection):
                 {'name_ascii': transform_input_value(query)},
                 queries.FIELDS_TO_IGNORE)
     
+    if results is None:
+        queries.FIND_BY_ALIAS['aliases']['$regex'] = transform_input_value(query)
+        results = Database.find_one(collection, 
+                queries.FIND_BY_ALIAS,
+                queries.FIELDS_TO_IGNORE)
+
     return results
 
 

@@ -11,4 +11,15 @@ FIND_BY_FIRSTNAME_AND_LASTNAME = {
     }
 }
 
+
+# query for searching in the alias field
+# used only when name_ascii finds nothing
+FIND_BY_ALIAS = {
+    "aliases": {
+        "$regex": '$query',
+        "$options": "i"
+  }
+}
+
+
 FIELDS_TO_IGNORE = {"first_seen":False, "last_seen":False, "last_change":False, "_id": False}
